@@ -35,6 +35,13 @@ $password = getenv('DB_PASS');
 $defaultSchema = getenv('DB_NAME');
 $charset = getenv('DB_CHARSET');
 
+$hostname = "localhost";
+$port = "3306";
+$username = "root";
+$password = "";
+$defaultSchema = "slurp";
+$charset = "utf8mb4";
+
 $dsn = "mysql:host=$hostname;dbname=$defaultSchema;charset=$charset;port=$port";
 
 $option = [
