@@ -12,191 +12,152 @@ $user = $_SESSION['user'];
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SendNoods - Profile</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <style>
     body { background: #000; color: #dc2626; }
-    .profile-card { background: #000; border: 2px solid #dc2626; }
-    .profile-label { color: #fff; }
-    .profile-value { color: #dc2626; }
-    .logout-btn, .view-btn { background: #dc2626; color: #fff; border: none; }
-    .logout-btn:hover, .view-btn:hover { background: #b91c1c; color: #fff; }
-    .orders-section { background: #000; border: 2px solid #dc2626; }
-    .noodspro-div { background: #000 !important; border: 2px solid #dc2626; }
-    #main-blur-blur {
-      transition: filter 0.2s;
-    }
-    .modal-blur-bg #main-blur-blur {
-      filter: blur(2.5px);
-    }
-    .modal-backdrop.show {
-      opacity: 0.85 !important;
-      background: #000 !important;
-      backdrop-filter: blur(0px) !important;
-    }
-    .modal-content {
-      background: rgba(0, 0, 0, 0.7) !important;
-      backdrop-filter: blur(0px) !important;
-    }
+    #main-blur-blur { transition: filter 0.2s; }
+    .modal-blur-bg #main-blur-blur { filter: blur(2.5px); }
   </style>
 </head>
-<body class="bg-black text-danger min-vh-100">
+<body class="bg-black text-red-600 min-h-screen">
   <?php include_once "includes/header.php"; ?>
 
   <div id="main-blur-blur">
-    <main class="container py-5">
-      <div class="row justify-content-center">
-        <div class="col-12 col-md-6 col-lg-5 d-flex flex-column align-items-center">
+    <main class="container mx-auto py-10">
+      <div class="flex flex-col lg:flex-row justify-center gap-8">
+        <div class="w-full max-w-md flex flex-col items-center">
           <!-- profile card -->
-          <div class="profile-card rounded-3 shadow-lg p-4 mb-4 w-100">
-            <div class="text-center mb-4">
-              <i class="fas fa-user-circle fa-4x text-danger mb-2"></i>
-              <h2 class="fw-bold text-danger mb-1"><?php echo htmlspecialchars($user['f_name'] . ' ' . $user['l_name']); ?></h2>
-              <div class="d-flex justify-content-center gap-3 mt-3">
-                <button type="button" class="btn view-btn px-4 rounded-pill fw-bold shadow" data-bs-toggle="modal" data-bs-target="#viewProfileModal">
-                  <i class="fas fa-id-card me-2"></i>View Profile
+          <div class="bg-black border-2 border-red-600 rounded-xl shadow-lg p-8 mb-8 w-full">
+            <div class="text-center mb-6">
+              <svg class="mx-auto mb-2 text-red-600" width="64" height="64" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.7 0 8 1.34 8 4v2H4v-2c0-2.66 5.3-4 8-4zm0-2a4 4 0 100-8 4 4 0 000 8z"/></svg>
+              <h2 class="font-bold text-red-600 text-2xl mb-1"><?php echo htmlspecialchars($user['f_name'] . ' ' . $user['l_name']); ?></h2>
+              <div class="flex justify-center gap-3 mt-3">
+                <button type="button" class="bg-red-600 text-white px-4 py-2 rounded-full font-bold shadow hover:bg-red-700" id="showProfileModal">
+                  <svg class="inline mr-2" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.7 0 8 1.34 8 4v2H4v-2c0-2.66 5.3-4 8-4zm0-2a4 4 0 100-8 4 4 0 000 8z"/></svg>
+                  View Profile
                 </button>
               </div>
             </div>
-            <div class="mb-4">
+            <div class="mb-6">
               <!-- noodspro -->
-              <div class="noodspro-div rounded-4 text-center p-3 shadow-lg" style="background: linear-gradient(120deg, #1a1a1a 60%, #dc2626 100%); border: 2px solid #dc2626;">
-                <div class="d-flex align-items-center justify-content-center mb-1">
-                  <span class="fw-bold text-warning fs-5 me-2">20%</span>
-                  <i class="fas fa-percent text-warning fs-6 me-2"></i>
-                  <span class="fw-bold text-white fs-6" style="letter-spacing:1px;">OFF!</span>
+              <div class="rounded-2xl text-center p-4 shadow-lg" style="background: linear-gradient(120deg, #1a1a1a 60%, #dc2626 100%); border: 2px solid #dc2626;">
+                <div class="flex items-center justify-center mb-1">
+                  <span class="font-bold text-yellow-400 text-lg mr-2">20%</span>
+                  <svg class="text-yellow-400 mr-2" width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17 7V3H7v4H3v14h18V7h-4zm-8-2h6v2H9V5zm10 16H5V9h14v12zm-7-2c2.21 0 4-1.79 4-4h-2a2 2 0 01-4 0H7c0 2.21 1.79 4 4 4z"/></svg>
+                  <span class="font-bold text-white text-base" style="letter-spacing:1px;">OFF!</span>
                 </div>
-                <div class="fw-bold text-white fs-6 mb-1" style="letter-spacing:1px;">
-                  Save with <span class="text-warning">NoodsPro!</span>
+                <div class="font-bold text-white text-base mb-1" style="letter-spacing:1px;">
+                  Save with <span class="text-yellow-400">NoodsPro!</span>
                 </div>
-                <div class="text-white-50 mb-2" style="font-size:0.95rem;">
-                  <i class="fas fa-gift text-danger me-1"></i>FREE for 30 days
+                <div class="text-white/70 mb-2 text-sm">
+                  <svg class="inline text-red-600 mr-1" width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  FREE for 30 days
                 </div>
-                <a href="#" class="btn btn-warning fw-bold px-3 py-1 rounded-pill mt-2 shadow" style="color:#b91c1c; font-size:1rem;">
-                  <i class="fas fa-arrow-right me-2"></i>Start your free trial
+                <a href="#" class="bg-yellow-400 font-bold px-4 py-2 rounded-full mt-2 shadow text-red-700 text-base inline-block hover:bg-yellow-300">
+                  <svg class="inline mr-2" width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M10 17l5-5-5-5v10z"/></svg>
+                  Start your free trial
                 </a>
               </div>
             </div>
             <!-- tiles -->
-            <div class="row g-3 mb-4">
-              <div class="col-12 col-sm-4">
-                <div class="bg-black border border-danger rounded-3 p-3 h-100 d-flex flex-column align-items-center shadow">
-                  <i class="fas fa-heart fa-2x text-danger mb-2"></i>
-                  <span class="fw-bold text-danger">Favorites</span>
-                  <span class="text-white-50 small">Your most loved dishes</span>
-                </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+              <div class="bg-black border border-red-600 rounded-xl p-4 flex flex-col items-center shadow">
+                <svg class="text-red-600 mb-2" width="32" height="32" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <span class="font-bold text-red-600">Favorites</span>
+                <span class="text-white/70 text-sm">Your most loved dishes</span>
               </div>
-              <div class="col-12 col-sm-4">
-                <div class="bg-black border border-danger rounded-3 p-3 h-100 d-flex flex-column align-items-center shadow">
-                  <i class="fas fa-store-alt fa-2x text-danger mb-2"></i>
-                  <span class="fw-bold text-danger">Branches</span>
-                  <span class="text-white-50 small">Find a SendNoods near you</span>
-                </div>
+              <div class="bg-black border border-red-600 rounded-xl p-4 flex flex-col items-center shadow">
+                <svg class="text-red-600 mb-2" width="32" height="32" fill="currentColor" viewBox="0 0 24 24"><path d="M20 6h-2V4a2 2 0 00-2-2H8a2 2 0 00-2 2v2H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V8a2 2 0 00-2-2zm-6 12a4 4 0 110-8 4 4 0 010 8zm-6-8V8h12v2H6z"/></svg>
+                <span class="font-bold text-red-600">Branches</span>
+                <span class="text-white/70 text-sm">Find a SendNoods near you</span>
               </div>
-              <div class="col-12 col-sm-4">
-                <div class="bg-black border border-danger rounded-3 p-3 h-100 d-flex flex-column align-items-center shadow">
-                  <i class="fas fa-coins fa-2x text-warning mb-2"></i>
-                  <span class="fw-bold text-danger">Points</span>
-                  <span class="text-white-50 small">Earn and redeem rewards</span>
-                </div>
+              <div class="bg-black border border-red-600 rounded-xl p-4 flex flex-col items-center shadow">
+                <svg class="text-yellow-400 mb-2" width="32" height="32" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <span class="font-bold text-red-600">Points</span>
+                <span class="text-white/70 text-sm">Earn and redeem rewards</span>
               </div>
             </div>
             <!-- paynoods -->
-            <div class="bg-black border border-danger rounded-3 p-3 shadow mb-4">
-              <div class="fw-bold text-danger fs-5 mb-1 d-flex align-items-center justify-content-between">
-                <span><i class="fas fa-wallet me-2"></i>PayNoods</span>
-                <span class="fs-4 fw-bold" style="color:#fbbf24;">₱69.00</span>
+            <div class="bg-black border border-red-600 rounded-xl p-4 shadow mb-6">
+              <div class="font-bold text-red-600 text-lg mb-1 flex items-center justify-between">
+                <span><svg class="inline mr-2" width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M21 7V3H3v4H1v2h2v12h18V9h2V7h-2zm-2 12H5V9h14v10zm-7-2c2.21 0 4-1.79 4-4h-2a2 2 0 01-4 0H7c0 2.21 1.79 4 4 4z"/></svg>PayNoods</span>
+                <span class="text-yellow-400 text-xl font-bold">₱69.00</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-12 col-md-6 col-lg-7 d-flex align-items-stretch">
-          <div class="w-100">
+        <div class="w-full max-w-2xl flex-1 flex items-stretch">
+          <div class="w-full">
             <!-- perks just for you -->
-            <div class="orders-section rounded-3 shadow-lg p-4 mb-4 w-100 text-start">
-              <h3 class="fw-bold text-danger mb-3"><i class="fas fa-gift me-2"></i>Perks Just for You</h3>
-              <div class="row g-3">
-                <div class="col-12 col-md-6">
-                  <div class="bg-black border border-danger rounded-3 p-3 d-flex align-items-center gap-3 shadow">
-                    <i class="fas fa-crown fa-2x text-warning"></i>
-                    <div>
-                      <span class="fw-bold text-danger">Become a Pro</span><br>
-                      <span class="text-white-50 small">Unlock exclusive discounts and features</span>
-                    </div>
+            <div class="bg-black border-2 border-red-600 rounded-xl shadow-lg p-8 mb-8 w-full text-left">
+              <h3 class="font-bold text-red-600 text-xl mb-4 flex items-center"><svg class="inline mr-2" width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>Perks Just for You</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-black border border-red-600 rounded-xl p-4 flex items-center gap-3 shadow">
+                  <svg class="text-yellow-400" width="32" height="32" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <div>
+                    <span class="font-bold text-red-600">Become a Pro</span><br>
+                    <span class="text-white/70 text-sm">Unlock exclusive discounts and features</span>
                   </div>
                 </div>
-                <div class="col-12 col-md-6">
-                  <div class="bg-black border border-danger rounded-3 p-3 d-flex align-items-center gap-3 shadow">
-                    <i class="fas fa-coins fa-2x text-warning"></i>
-                    <div>
-                      <span class="fw-bold text-danger">Nood Rewards</span><br>
-                      <span class="text-white-50 small">Earn points every order</span>
-                    </div>
+                <div class="bg-black border border-red-600 rounded-xl p-4 flex items-center gap-3 shadow">
+                  <svg class="text-yellow-400" width="32" height="32" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <div>
+                    <span class="font-bold text-red-600">Nood Rewards</span><br>
+                    <span class="text-white/70 text-sm">Earn points every order</span>
                   </div>
                 </div>
-                <div class="col-12 col-md-6">
-                  <div class="bg-black border border-danger rounded-3 p-3 d-flex align-items-center gap-3 shadow">
-                    <i class="fas fa-ticket-alt fa-2x text-danger"></i>
-                    <div>
-                      <span class="fw-bold text-danger">Vouchers</span><br>
-                      <span class="text-white-50 small">Redeem for discounts and freebies</span>
-                    </div>
+                <div class="bg-black border border-red-600 rounded-xl p-4 flex items-center gap-3 shadow">
+                  <svg class="text-red-600" width="32" height="32" fill="currentColor" viewBox="0 0 24 24"><path d="M21 7V3H3v4H1v2h2v12h18V9h2V7h-2zm-2 12H5V9h14v10zm-7-2c2.21 0 4-1.79 4-4h-2a2 2 0 01-4 0H7c0 2.21 1.79 4 4 4z"/></svg>
+                  <div>
+                    <span class="font-bold text-red-600">Vouchers</span><br>
+                    <span class="text-white/70 text-sm">Redeem for discounts and freebies</span>
                   </div>
                 </div>
-                <div class="col-12 col-md-6">
-                  <div class="bg-black border border-danger rounded-3 p-3 d-flex align-items-center gap-3 shadow">
-                    <i class="fas fa-user-friends fa-2x text-danger"></i>
-                    <div>
-                      <span class="fw-bold text-danger">Invite Friends</span><br>
-                      <span class="text-white-50 small">Get rewards for every successful invite</span>
-                    </div>
+                <div class="bg-black border border-red-600 rounded-xl p-4 flex items-center gap-3 shadow">
+                  <svg class="text-red-600" width="32" height="32" fill="currentColor" viewBox="0 0 24 24"><path d="M16 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm-8 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4zm8 0c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                  <div>
+                    <span class="font-bold text-red-600">Invite Friends</span><br>
+                    <span class="text-white/70 text-sm">Get rewards for every successful invite</span>
                   </div>
                 </div>
               </div>
             </div>
             <!-- general -->
-            <div class="orders-section rounded-3 shadow-lg p-4 w-100 text-start">
-              <h3 class="fw-bold text-danger mb-3"><i class="fas fa-cog me-2"></i>General</h3>
-              <div class="row g-3">
-                <div class="col-12 col-md-6">
-                  <div class="bg-black border border-danger rounded-3 p-3 d-flex align-items-center gap-3 shadow">
-                    <i class="fas fa-cog fa-2x text-danger"></i>
-                    <div>
-                      <span class="fw-bold text-danger">Settings</span><br>
-                      <span class="text-white-50 small">Manage your account preferences</span>
-                    </div>
+            <div class="bg-black border-2 border-red-600 rounded-xl shadow-lg p-8 w-full text-left">
+              <h3 class="font-bold text-red-600 text-xl mb-4 flex items-center"><svg class="inline mr-2" width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>General</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-black border border-red-600 rounded-xl p-4 flex items-center gap-3 shadow">
+                  <svg class="text-red-600" width="32" height="32" fill="currentColor" viewBox="0 0 24 24"><path d="M19.14 12.94a1.5 1.5 0 00-2.12 0l-1.42 1.42a1.5 1.5 0 000 2.12l1.42 1.42a1.5 1.5 0 002.12 0l1.42-1.42a1.5 1.5 0 000-2.12l-1.42-1.42z"/></svg>
+                  <div>
+                    <span class="font-bold text-red-600">Settings</span><br>
+                    <span class="text-white/70 text-sm">Manage your account preferences</span>
                   </div>
                 </div>
-                <div class="col-12 col-md-6">
-                  <div class="bg-black border border-danger rounded-3 p-3 d-flex align-items-center gap-3 shadow">
-                    <i class="fas fa-question-circle fa-2x text-warning"></i>
-                    <div>
-                      <span class="fw-bold text-danger">Help Center</span><br>
-                      <span class="text-white-50 small">Get support and FAQs</span>
-                    </div>
+                <div class="bg-black border border-red-600 rounded-xl p-4 flex items-center gap-3 shadow">
+                  <svg class="text-yellow-400" width="32" height="32" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <div>
+                    <span class="font-bold text-red-600">Help Center</span><br>
+                    <span class="text-white/70 text-sm">Get support and FAQs</span>
                   </div>
                 </div>
-                <div class="col-12 col-md-6">
-                  <div class="bg-black border border-danger rounded-3 p-3 d-flex align-items-center gap-3 shadow">
-                    <i class="fas fa-briefcase fa-2x text-danger"></i>
-                    <div>
-                      <span class="fw-bold text-danger">Business</span><br>
-                      <span class="text-white-50 small">Partner with SendNoods</span>
-                    </div>
+                <div class="bg-black border border-red-600 rounded-xl p-4 flex items-center gap-3 shadow">
+                  <svg class="text-red-600" width="32" height="32" fill="currentColor" viewBox="0 0 24 24"><path d="M21 7V3H3v4H1v2h2v12h18V9h2V7h-2zm-2 12H5V9h14v10zm-7-2c2.21 0 4-1.79 4-4h-2a2 2 0 01-4 0H7c0 2.21 1.79 4 4 4z"/></svg>
+                  <div>
+                    <span class="font-bold text-red-600">Business</span><br>
+                    <span class="text-white/70 text-sm">Partner with SendNoods</span>
                   </div>
                 </div>
-                <div class="col-12 col-md-6">
-                  <div class="bg-black border border-danger rounded-3 p-3 d-flex align-items-center gap-3 shadow">
-                    <i class="fas fa-file-contract fa-2x text-danger"></i>
-                    <div>
-                      <span class="fw-bold text-danger">Terms &amp; Conditions</span><br>
-                      <span class="text-white-50 small">Read our policies</span>
-                    </div>
+                <div class="bg-black border border-red-600 rounded-xl p-4 flex items-center gap-3 shadow">
+                  <svg class="text-red-600" width="32" height="32" fill="currentColor" viewBox="0 0 24 24"><path d="M21 7V3H3v4H1v2h2v12h18V9h2V7h-2zm-2 12H5V9h14v10zm-7-2c2.21 0 4-1.79 4-4h-2a2 2 0 01-4 0H7c0 2.21 1.79 4 4 4z"/></svg>
+                  <div>
+                    <span class="font-bold text-red-600">Terms &amp; Conditions</span><br>
+                    <span class="text-white/70 text-sm">Read our policies</span>
                   </div>
                 </div>
               </div>
-              <div class="w-100 d-flex justify-content-center mt-4 mb-2">
-                <a href="./logout.php" class="btn logout-btn px-4 rounded-pill fw-bold shadow">Logout</a>
+              <div class="w-full flex justify-center mt-6 mb-2">
+                <a href="./logout.php" class="bg-red-600 text-white px-6 py-2 rounded-full font-bold shadow hover:bg-red-700">Logout</a>
               </div>
             </div>
           </div>
@@ -205,53 +166,63 @@ $user = $_SESSION['user'];
     </main>
   </div>
   <!-- view profile modal -->
-  <div class="modal fade modal-center-profile" id="viewProfileModal" tabindex="-1" aria-labelledby="viewProfileModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content bg-black text-danger border-danger">
-        <div class="modal-header border-danger">
-          <h5 class="modal-title text-danger" id="viewProfileModalLabel">Profile Information</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+  <div id="profileModalWrapper" class="fixed inset-0 z-50 hidden items-center justify-center">
+    <div class="absolute inset-0 bg-black/85 backdrop-blur-sm" id="profileModalBg"></div>
+    <div id="profileModal" class="relative bg-black text-red-600 border-2 border-red-600 rounded-xl w-full max-w-lg mx-auto flex flex-col overflow-hidden">
+      <div class="flex justify-between items-center border-b-2 border-red-600 px-6 py-4">
+        <h5 class="text-red-600 text-xl">Profile Information</h5>
+        <button type="button" class="text-white text-2xl" id="closeProfileModal">&times;</button>
+      </div>
+      <div class="px-6 py-4">
+        <div class="mb-3">
+          <span class="font-bold text-white">Full Name:</span>
+          <span class="ml-2 text-red-600"><?php echo htmlspecialchars($user['f_name'] . ' ' . $user['l_name']); ?></span>
         </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <span class="profile-label fw-bold">Full Name:</span>
-            <span class="profile-value ms-2"><?php echo htmlspecialchars($user['f_name'] . ' ' . $user['l_name']); ?></span>
-          </div>
-          <div class="mb-3">
-            <span class="profile-label fw-bold">Username:</span>
-            <span class="profile-value ms-2"><?php echo htmlspecialchars($user['username']); ?></span>
-          </div>
-          <div class="mb-3">
-            <span class="profile-label fw-bold">Email:</span>
-            <span class="profile-value ms-2"><?php echo htmlspecialchars($user['email']); ?></span>
-          </div>
-          <div class="mb-3">
-            <span class="profile-label fw-bold">User Type:</span>
-            <span class="profile-value ms-2"><?php echo $user['usertype'] == 1 ? 'Admin' : 'Customer'; ?></span>
-          </div>
-          <div class="mb-3">
-            <span class="profile-label fw-bold">Address:</span>
-            <span class="profile-value ms-2"><?php echo htmlspecialchars($user['address'] ?? ''); ?></span>
-          </div>
+        <div class="mb-3">
+          <span class="font-bold text-white">Username:</span>
+          <span class="ml-2 text-red-600"><?php echo htmlspecialchars($user['username']); ?></span>
         </div>
-        <div class="modal-footer border-danger d-flex justify-content-center">
-          <a href="./edit_profile.php" class="btn btn-danger text-white">Edit Profile</a>
+        <div class="mb-3">
+          <span class="font-bold text-white">Email:</span>
+          <span class="ml-2 text-red-600"><?php echo htmlspecialchars($user['email']); ?></span>
         </div>
+        <div class="mb-3">
+          <span class="font-bold text-white">User Type:</span>
+          <span class="ml-2 text-red-600"><?php echo $user['usertype'] == 1 ? 'Admin' : 'Customer'; ?></span>
+        </div>
+        <div class="mb-3">
+          <span class="font-bold text-white">Address:</span>
+          <span class="ml-2 text-red-600"><?php echo htmlspecialchars($user['address'] ?? ''); ?></span>
+        </div>
+      </div>
+      <div class="border-t-2 border-red-600 px-6 py-4 flex justify-center">
+        <a href="./edit_profile.php" class="bg-red-600 text-white px-6 py-2 rounded-full font-bold hover:bg-red-700">Edit Profile</a>
       </div>
     </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var modal = document.getElementById('viewProfileModal');
-      if (modal) {
-        modal.addEventListener('show.bs.modal', function() {
-          document.body.classList.add('modal-blur-bg');
-        });
-        modal.addEventListener('hidden.bs.modal', function() {
-          document.body.classList.remove('modal-blur-bg');
-        });
-      }
+    // Modal logic with jQuery
+    function toggleBodyBlur(show) {
+      if (show) $('body').addClass('modal-blur-bg');
+      else $('body').removeClass('modal-blur-bg');
+    }
+    function showModal($wrapper) {
+      $('.fixed.inset-0.z-50').addClass('hidden').removeClass('flex');
+      $wrapper.removeClass('hidden').addClass('flex');
+      toggleBodyBlur(true);
+    }
+    function hideModal($wrapper) {
+      $wrapper.addClass('hidden').removeClass('flex');
+      toggleBodyBlur(false);
+    }
+    $('#showProfileModal').on('click', function() {
+      showModal($('#profileModalWrapper'));
+    });
+    $('#closeProfileModal').on('click', function() {
+      hideModal($('#profileModalWrapper'));
+    });
+    $('#profileModalBg').on('click', function() {
+      hideModal($('#profileModalWrapper'));
     });
   </script>
 </body>
