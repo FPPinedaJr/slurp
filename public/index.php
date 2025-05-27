@@ -67,8 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SendNoods - Noodle Shop</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <style>
     #main-blur-blur {
       transition: filter 0.2s;
@@ -78,276 +78,278 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
       filter: blur(2.5px);
     }
 
-    .modal-backdrop.show {
-      opacity: 0.85 !important;
-      background: #000 !important;
-      backdrop-filter: blur(0px) !important;
-    }
-
-    .modal-content {
-      background: rgba(0, 0, 0, 0.7) !important;
-      backdrop-filter: blur(0px) !important;
+    .modal-bg {
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(0px);
     }
   </style>
 </head>
 
-<body class="bg-black text-danger">
+<body class="bg-black text-red-600">
   <?php include_once "includes/header.php"; ?>
 
   <div id="main-blur-blur">
-    <main class="container py-5 text-center">
-      <h1 class="text-danger fw-bold mb-3">Welcome to SendNoods</h1>
-      <div class="w-100 d-flex justify-content-center mb-4">
-        <div class="text-white fs-5 text-justify" style="max-width: 1000px; text-align: justify;">
-          Inspired by the rich traditions of Japanese noodle culture, <span class="text-danger fw-bold">SendNoods</span> brings you bold flavors, quality ingredients, and handcrafted bowls made with care. From classic broths to modern twists, every dish we serve honors the simplicity and soul of Japanese comfort food—delivered with a touch of cheeky fun.
+    <main class="container mx-auto py-10 text-center">
+      <h1 class="text-red-600 font-bold text-4xl mb-6">Welcome to SendNoods</h1>
+      <div class="w-full flex justify-center mb-8">
+        <div class="text-white text-lg max-w-3xl text-justify">
+          Inspired by the rich traditions of Japanese noodle culture, <span class="text-red-600 font-bold">SendNoods</span> brings you bold flavors, quality ingredients, and handcrafted bowls made with care. From classic broths to modern twists, every dish we serve honors the simplicity and soul of Japanese comfort food—delivered with a touch of cheeky fun.
         </div>
       </div>
       <!-- carousel -->
-      <section class="mb-5">
-        <div class="position-relative mb-4 mx-auto" style="width: 100vw; max-width: none; left: 50%; right: 50%; transform: translateX(-50%); overflow: hidden;">
-          <div id="multiImageCarousel" class="d-flex align-items-center" style="transition: transform 0.5s;">
-            <img src="./assets/images/1.png" class="carousel-img mx-2 rounded" style="width: 300px; height: 200px; object-fit: cover;">
-            <img src="./assets/images/2.png" class="carousel-img mx-2 rounded" style="width: 300px; height: 200px; object-fit: cover;">
-            <img src="./assets/images/3.png" class="carousel-img mx-2 rounded" style="width: 300px; height: 200px; object-fit: cover;">
-            <img src="./assets/images/4.png" class="carousel-img mx-2 rounded" style="width: 300px; height: 200px; object-fit: cover;">
-            <img src="./assets/images/5.png" class="carousel-img mx-2 rounded" style="width: 300px; height: 200px; object-fit: cover;">
-            <img src="./assets/images/6.png" class="carousel-img mx-2 rounded" style="width: 300px; height: 200px; object-fit: cover;">
-            <img src="./assets/images/7.png" class="carousel-img mx-2 rounded" style="width: 300px; height: 200px; object-fit: cover;">
-            <img src="./assets/images/8.png" class="carousel-img mx-2 rounded" style="width: 300px; height: 200px; object-fit: cover;">
-            <img src="./assets/images/9.png" class="carousel-img mx-2 rounded" style="width: 300px; height: 200px; object-fit: cover;">
-            <img src="./assets/images/10.png" class="carousel-img mx-2 rounded" style="width: 300px; height: 200px; object-fit: cover;">
+      <section class="mb-10">
+        <div class="relative mb-8 mx-auto w-full max-w-none left-1/2 right-1/2 -translate-x-1/2 overflow-hidden">
+          <div id="multiImageCarousel" class="flex items-center transition-transform duration-500">
+            <img src="./assets/images/1.png" class="carousel-img mx-2 rounded w-[300px] h-[200px] object-cover" />
+            <img src="./assets/images/2.png" class="carousel-img mx-2 rounded w-[300px] h-[200px] object-cover" />
+            <img src="./assets/images/3.png" class="carousel-img mx-2 rounded w-[300px] h-[200px] object-cover" />
+            <img src="./assets/images/4.png" class="carousel-img mx-2 rounded w-[300px] h-[200px] object-cover" />
+            <img src="./assets/images/5.png" class="carousel-img mx-2 rounded w-[300px] h-[200px] object-cover" />
+            <img src="./assets/images/6.png" class="carousel-img mx-2 rounded w-[300px] h-[200px] object-cover" />
+            <img src="./assets/images/7.png" class="carousel-img mx-2 rounded w-[300px] h-[200px] object-cover" />
+            <img src="./assets/images/8.png" class="carousel-img mx-2 rounded w-[300px] h-[200px] object-cover" />
+            <img src="./assets/images/9.png" class="carousel-img mx-2 rounded w-[300px] h-[200px] object-cover" />
+            <img src="./assets/images/10.png" class="carousel-img mx-2 rounded w-[300px] h-[200px] object-cover" />
           </div>
-          <button id="multiPrev" class="btn btn-danger position-absolute top-50 start-0 translate-middle-y" style="z-index:2;">
-            <i class="fas fa-chevron-left"></i>
+          <button id="multiPrev" class="btn absolute top-1/2 left-0 -translate-y-1/2 z-10 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+            &#8592;
           </button>
-          <button id="multiNext" class="btn btn-danger position-absolute top-50 end-0 translate-middle-y" style="z-index:2;">
-            <i class="fas fa-chevron-right"></i>
+          <button id="multiNext" class="btn absolute top-1/2 right-0 -translate-y-1/2 z-10 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+            &#8594;
           </button>
         </div>
       </section>
       <!-- deals -->
-      <section class="mb-5">
-        <h2 class="mb-4 fw-bold text-danger">We Offer Special Deals for New Customers</h2>
-        <div class="row g-4 justify-content-center mb-3">
-          <div class="col-12 col-md-4">
-            <div class="bg-black border border-danger rounded-3 p-4 h-100 d-flex flex-column align-items-center shadow">
-              <span class="fw-bold text-danger fs-5 mb-2">Buy 1 Get 1 Free</span>
-              <span class="text-white-50">On all classic ramen orders. Today only!</span>
-            </div>
+      <section class="mb-10">
+        <h2 class="mb-6 font-bold text-red-600 text-2xl">We Offer Special Deals for New Customers</h2>
+        <div class="flex flex-col md:flex-row gap-6 justify-center mb-6">
+          <div class="bg-black border border-red-600 rounded-xl p-6 flex flex-col items-center shadow w-full md:w-1/3">
+            <span class="font-bold text-red-600 text-lg mb-2">Buy 1 Get 1 Free</span>
+            <span class="text-white/70">On all classic ramen orders. Today only!</span>
           </div>
-          <div class="col-12 col-md-4">
-            <div class="bg-black border border-danger rounded-3 p-4 h-100 d-flex flex-column align-items-center shadow">
-              <span class="fw-bold text-danger fs-5 mb-2">Free Drink</span>
-              <span class="text-white-50">With any purchase over ₱300.</span>
-            </div>
+          <div class="bg-black border border-red-600 rounded-xl p-6 flex flex-col items-center shadow w-full md:w-1/3">
+            <span class="font-bold text-red-600 text-lg mb-2">Free Drink</span>
+            <span class="text-white/70">With any purchase over ₱300.</span>
           </div>
-          <div class="col-12 col-md-4">
-            <div class="bg-black border border-danger rounded-3 p-4 h-100 d-flex flex-column align-items-center shadow">
-              <span class="fw-bold text-danger fs-5 mb-2">Loyalty Rewards</span>
-              <span class="text-white-50">Earn points every time you order online.</span>
-            </div>
+          <div class="bg-black border border-red-600 rounded-xl p-6 flex flex-col items-center shadow w-full md:w-1/3">
+            <span class="font-bold text-red-600 text-lg mb-2">Loyalty Rewards</span>
+            <span class="text-white/70">Earn points every time you order online.</span>
           </div>
         </div>
         <div class="mt-3">
-          <span class="text-white fs-5">Are you interested? <span class="text-danger">Check it out by signing up or logging in if you already have an account!</span></span>
+          <span class="text-white text-lg">Are you interested? <span class="text-red-600">Check it out by signing up or logging in if you already have an account!</span></span>
         </div>
       </section>
       <!-- auth buttons -->
-      <div class="d-flex justify-content-center gap-3">
-        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
-        <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#signupModal">Sign Up</button>
+      <div class="flex justify-center gap-4">
+        <button class="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700" id="showLoginModal">Login</button>
+        <button class="border border-red-600 text-red-600 px-6 py-2 rounded hover:bg-red-700 hover:text-white" id="showSignupModal">Sign Up</button>
       </div>
     </main>
   </div>
 
   <!-- login modal -->
-  <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content bg-black text-danger border-danger">
-        <div class="row g-0">
-          <div class="col-md-5 d-none d-md-block">
-            <img src="./assets/images/logmodal.png" alt="Login" class="img-fluid h-100 w-100 object-fit-cover rounded-start" style="object-fit: cover; height:100%;">
-          </div>
-          <div class="col-12 col-md-7">
-            <div class="modal-header border-danger">
-              <h5 class="modal-title text-danger">Login</h5>
-              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <form method="post" autocomplete="off">
-              <div class="modal-body">
-                <?php if (!empty($login_error)): ?>
-                  <div class="alert alert-danger py-2"><?php echo htmlspecialchars($login_error); ?></div>
-                <?php endif; ?>
-                <?php if (!empty($login_success)): ?>
-                  <div class="alert alert-success py-2"><?php echo htmlspecialchars($login_success); ?></div>
-                <?php endif; ?>
-                <div class="mb-3">
-                  <label for="loginEmail" class="form-label">Email address</label>
-                  <input type="email" class="form-control bg-black text-danger border-danger" id="loginEmail" name="loginEmail" required autocomplete="email" required />
-                </div>
-                <div class="mb-3">
-                  <label for="loginPassword" class="form-label">Password</label>
-                  <input type="password" class="form-control bg-black text-danger border-danger" id="loginPassword" name="loginPassword" required autocomplete="current-password" required />
-                </div>
-                <div class="text-center mt-3">
-                  <span>Didn't have an account yet? </span>
-                  <a href="#" class="text-danger text-decoration-underline" data-bs-dismiss="modal" data-bs-toggle="modal"
-                    data-bs-target="#signupModal">
-                    Register
-                  </a>
-                </div>
-              </div>
-              <div class="modal-footer border-danger">
-                <button type="submit" name="login" class="btn btn-danger w-100">Login</button>
-              </div>
-            </form>
-          </div>
+  <div id="loginModalWrapper" class="fixed inset-0 z-50 hidden items-center justify-center">
+    <div class="absolute inset-0 bg-black/85 backdrop-blur-sm" id="loginModalBg"></div>
+    <div id="loginModal" class="relative bg-black text-red-600 border border-red-600 rounded-xl w-full max-w-lg mx-auto flex flex-col md:flex-row overflow-hidden">
+      <div class="hidden md:block md:w-2/5">
+        <img src="./assets/images/logmodal.png" alt="Login" class="h-full w-full object-cover" />
+      </div>
+      <div class="w-full md:w-3/5">
+        <div class="flex justify-between items-center border-b border-red-600 px-6 py-4">
+          <h5 class="text-red-600 text-xl">Login</h5>
+          <button type="button" class="text-white text-2xl" id="closeLoginModal">&times;</button>
         </div>
+        <form method="post" autocomplete="off">
+          <div class="px-6 py-4">
+            <?php if (!empty($login_error)): ?>
+              <div class="bg-red-600 text-white rounded px-3 py-2 mb-2"><?php echo htmlspecialchars($login_error); ?></div>
+            <?php endif; ?>
+            <?php if (!empty($login_success)): ?>
+              <div class="bg-green-600 text-white rounded px-3 py-2 mb-2"><?php echo htmlspecialchars($login_success); ?></div>
+            <?php endif; ?>
+            <div class="mb-4">
+              <label for="loginEmail" class="block mb-1">Email address</label>
+              <input type="email" class="bg-black text-red-600 border border-red-600 rounded w-full px-3 py-2" id="loginEmail" name="loginEmail" required autocomplete="email" />
+            </div>
+            <div class="mb-4">
+              <label for="loginPassword" class="block mb-1">Password</label>
+              <input type="password" class="bg-black text-red-600 border border-red-600 rounded w-full px-3 py-2" id="loginPassword" name="loginPassword" required autocomplete="current-password" />
+            </div>
+            <div class="text-center mt-3">
+              <span>Didn't have an account yet? </span>
+              <a href="#" class="text-red-600 underline" id="switchToSignup">
+                Register
+              </a>
+            </div>
+          </div>
+          <div class="border-t border-red-600 px-6 py-4">
+            <button type="submit" name="login" class="bg-red-600 text-white w-full py-2 rounded hover:bg-red-700">Login</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
 
   <!-- signup modal -->
-  <div class="modal fade" id="signupModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content bg-black text-danger border-danger">
-        <div class="row g-0">
-          <div class="col-md-5 d-none d-md-block">
-            <img src="./assets/images/signmodal.png" alt="Sign Up" class="img-fluid h-100 w-100 object-fit-cover rounded-start" style="object-fit: cover; height:100%;">
-          </div>
-          <div class="col-12 col-md-7">
-            <div class="modal-header border-danger">
-              <h5 class="modal-title text-danger">Sign Up</h5>
-              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <form method="post" autocomplete="off">
-              <div class="modal-body">
-                <?php if (!empty($signup_error)): ?>
-                  <div class="alert alert-danger py-2"><?php echo htmlspecialchars($signup_error); ?></div>
-                <?php endif; ?>
-                <?php if (!empty($signup_success)): ?>
-                  <div class="alert alert-success py-2"><?php echo htmlspecialchars($signup_success); ?></div>
-                <?php endif; ?>
-                <div class="mb-3">
-                  <label for="signupFName" class="form-label">First Name</label>
-                  <input type="text" class="form-control bg-black text-danger border-danger" id="signupFName" name="signupFName" maxlength="90" required autocomplete="given-name" required />
-                </div>
-                <div class="mb-3">
-                  <label for="signupLName" class="form-label">Last Name</label>
-                  <input type="text" class="form-control bg-black text-danger border-danger" id="signupLName" name="signupLName" maxlength="90" required autocomplete="family-name" required />
-                </div>
-                <div class="mb-3">
-                  <label for="signupUsername" class="form-label">Username</label>
-                  <input type="text" class="form-control bg-black text-danger border-danger" id="signupUsername" name="signupUsername" maxlength="90" required autocomplete="username" required />
-                </div>
-                <div class="mb-3">
-                  <label for="signupEmail" class="form-label">Email address</label>
-                  <input type="email" class="form-control bg-black text-danger border-danger" id="signupEmail" name="signupEmail" maxlength="255" required autocomplete="email" required />
-                </div>
-                <div class="mb-3">
-                  <label for="signupUsertype" class="form-label">User Type</label>
-                  <select class="form-select bg-black text-danger border-danger" id="signupUsertype" name="signupUsertype" required required>
-                    <option value="" disabled selected>Select user type</option>
-                    <option value="0">Customer</option>
-                    <option value="1">Admin</option>
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label for="signupAddress" class="form-label">Address</label>
-                  <textarea class="form-control bg-black text-danger border-danger" id="signupAddress" name="signupAddress" rows="2" required autocomplete="street-address" required></textarea>
-                </div>
-                <div class="mb-3">
-                  <label for="signupPassword" class="form-label">Password</label>
-                  <input type="password" class="form-control bg-black text-danger border-danger" id="signupPassword" name="signupPassword" required autocomplete="new-password" required />
-                </div>
-              </div>
-              <div class="modal-footer border-danger">
-                <button type="submit" name="signup" class="btn btn-danger w-100 text-white">Sign Up</button>
-              </div>
-            </form>
-          </div>
+  <div id="signupModalWrapper" class="fixed inset-0 z-50 hidden items-center justify-center">
+    <div class="absolute inset-0 bg-black/85 backdrop-blur-sm" id="signupModalBg"></div>
+    <div id="signupModal" class="relative bg-black text-red-600 border border-red-600 rounded-xl w-full max-w-lg mx-auto flex flex-col md:flex-row overflow-hidden">
+      <div class="hidden md:block md:w-2/5">
+        <img src="./assets/images/signmodal.png" alt="Sign Up" class="h-full w-full object-cover" />
+      </div>
+      <div class="w-full md:w-3/5">
+        <div class="flex justify-between items-center border-b border-red-600 px-6 py-4">
+          <h5 class="text-red-600 text-xl">Sign Up</h5>
+          <button type="button" class="text-white text-2xl" id="closeSignupModal">&times;</button>
         </div>
+        <form method="post" autocomplete="off">
+          <div class="px-6 py-4">
+            <?php if (!empty($signup_error)): ?>
+              <div class="bg-red-600 text-white rounded px-3 py-2 mb-2"><?php echo htmlspecialchars($signup_error); ?></div>
+            <?php endif; ?>
+            <?php if (!empty($signup_success)): ?>
+              <div class="bg-green-600 text-white rounded px-3 py-2 mb-2"><?php echo htmlspecialchars($signup_success); ?></div>
+            <?php endif; ?>
+            <div class="mb-3">
+              <label for="signupFName" class="block mb-1">First Name</label>
+              <input type="text" class="bg-black text-red-600 border border-red-600 rounded w-full px-3 py-2" id="signupFName" name="signupFName" maxlength="90" required autocomplete="given-name" />
+            </div>
+            <div class="mb-3">
+              <label for="signupLName" class="block mb-1">Last Name</label>
+              <input type="text" class="bg-black text-red-600 border border-red-600 rounded w-full px-3 py-2" id="signupLName" name="signupLName" maxlength="90" required autocomplete="family-name" />
+            </div>
+            <div class="mb-3">
+              <label for="signupUsername" class="block mb-1">Username</label>
+              <input type="text" class="bg-black text-red-600 border border-red-600 rounded w-full px-3 py-2" id="signupUsername" name="signupUsername" maxlength="90" required autocomplete="username" />
+            </div>
+            <div class="mb-3">
+              <label for="signupEmail" class="block mb-1">Email address</label>
+              <input type="email" class="bg-black text-red-600 border border-red-600 rounded w-full px-3 py-2" id="signupEmail" name="signupEmail" maxlength="255" required autocomplete="email" />
+            </div>
+            <div class="mb-3">
+              <label for="signupUsertype" class="block mb-1">User Type</label>
+              <select class="bg-black text-red-600 border border-red-600 rounded w-full px-3 py-2" id="signupUsertype" name="signupUsertype" required>
+                <option value="" disabled selected>Select user type</option>
+                <option value="0">Customer</option>
+                <option value="1">Admin</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="signupAddress" class="block mb-1">Address</label>
+              <textarea class="bg-black text-red-600 border border-red-600 rounded w-full px-3 py-2" id="signupAddress" name="signupAddress" rows="2" required autocomplete="street-address"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="signupPassword" class="block mb-1">Password</label>
+              <input type="password" class="bg-black text-red-600 border border-red-600 rounded w-full px-3 py-2" id="signupPassword" name="signupPassword" required autocomplete="new-password" />
+            </div>
+          </div>
+          <div class="border-t border-red-600 px-6 py-4">
+            <button type="submit" name="signup" class="bg-red-600 text-white w-full py-2 rounded hover:bg-red-700">Sign Up</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const carousel = document.getElementById('multiImageCarousel');
-    const imgs = Array.from(carousel.querySelectorAll('.carousel-img'));
-    const prevBtn = document.getElementById('multiPrev');
-    const nextBtn = document.getElementById('multiNext');
+  // jQuery Carousel
+  $(function() {
+    const $carousel = $('#multiImageCarousel');
+    const $imgs = $carousel.find('.carousel-img');
     const visible = 3;
-    const total = imgs.length;
+    const total = $imgs.length;
     let animating = false;
 
     function setupClones() {
-      carousel.querySelectorAll('.clone').forEach(el => el.remove());
+      $carousel.find('.clone').remove();
       for (let i = 0; i < visible; i++) {
-        let clone = imgs[i].cloneNode(true);
-        clone.classList.add('clone');
-        carousel.appendChild(clone);
+        $imgs.eq(i).clone(true).addClass('clone').appendTo($carousel);
       }
       for (let i = total - visible; i < total; i++) {
-        let clone = imgs[i].cloneNode(true);
-        clone.classList.add('clone');
-        carousel.insertBefore(clone, carousel.firstChild);
+        $imgs.eq(i).clone(true).addClass('clone').prependTo($carousel);
       }
     }
 
     setupClones();
 
-    let allImgs = carousel.querySelectorAll('.carousel-img');
+    let $allImgs = $carousel.find('.carousel-img');
     let position = visible;
 
     function getImgWidth() {
-      return imgs[0].offsetWidth + 16;
+      return $imgs[0].offsetWidth + 16;
     }
 
     function updateCarousel(animate = true) {
       const imgWidth = getImgWidth();
-      if (!animate) carousel.style.transition = 'none';
-      else carousel.style.transition = 'transform 0.8s cubic-bezier(0.77,0,0.18,1)';
-      carousel.style.transform = `translateX(-${position * imgWidth}px)`;
-      if (!animate) setTimeout(() => carousel.style.transition = 'transform 0.8s cubic-bezier(0.77,0,0.18,1)', 10);
+      if (!animate) $carousel.css('transition', 'none');
+      else $carousel.css('transition', 'transform 0.8s cubic-bezier(0.77,0,0.18,1)');
+      $carousel.css('transform', `translateX(-${position * imgWidth}px)`);
+      if (!animate) setTimeout(() => $carousel.css('transition', 'transform 0.8s cubic-bezier(0.77,0,0.18,1)'), 10);
     }
 
-    window.addEventListener('load', () => updateCarousel(false));
-    window.addEventListener('resize', () => updateCarousel(false));
+    $(window).on('load resize', function() { updateCarousel(false); });
 
     function slideTo(newPosition) {
       if (animating) return;
       animating = true;
-      const imgWidth = getImgWidth();
       position = newPosition;
       updateCarousel();
       setTimeout(() => animating = false, 800);
     }
 
-    prevBtn.addEventListener('click', () => {
+    $('#multiPrev').on('click', function() {
       position -= visible;
       if (position < 0) position = total;
       slideTo(position);
     });
 
-    nextBtn.addEventListener('click', () => {
+    $('#multiNext').on('click', function() {
       position += visible;
       if (position >= total * 2) position = visible;
       slideTo(position);
     });
 
+    // Modal logic
     function toggleBodyBlur(show) {
-      if (show) document.body.classList.add('modal-blur-bg');
-      else document.body.classList.remove('modal-blur-bg');
+      if (show) $('body').addClass('modal-blur-bg');
+      else $('body').removeClass('modal-blur-bg');
     }
-    const modals = ['#loginModal', '#signupModal'];
-    modals.forEach(function(id) {
-      var modal = document.querySelector(id);
-      if (modal) {
-        modal.addEventListener('show.bs.modal', function() { toggleBodyBlur(true); });
-        modal.addEventListener('hidden.bs.modal', function() { toggleBodyBlur(false); });
-      }
+
+    function showModal($wrapper) {
+      $('.fixed.inset-0.z-50').addClass('hidden').removeClass('flex');
+      $wrapper.removeClass('hidden').addClass('flex');
+      toggleBodyBlur(true);
+    }
+    function hideModal($wrapper) {
+      $wrapper.addClass('hidden').removeClass('flex');
+      toggleBodyBlur(false);
+    }
+
+    $('#showLoginModal').on('click', function() {
+      showModal($('#loginModalWrapper'));
+    });
+    $('#showSignupModal').on('click', function() {
+      showModal($('#signupModalWrapper'));
+    });
+    $('#closeLoginModal').on('click', function() {
+      hideModal($('#loginModalWrapper'));
+    });
+    $('#closeSignupModal').on('click', function() {
+      hideModal($('#signupModalWrapper'));
+    });
+    $('#switchToSignup').on('click', function(e) {
+      e.preventDefault();
+      hideModal($('#loginModalWrapper'));
+      showModal($('#signupModalWrapper'));
+    });
+
+    // Hide modal on background click
+    $('#loginModalBg').on('click', function() {
+      hideModal($('#loginModalWrapper'));
+    });
+    $('#signupModalBg').on('click', function() {
+      hideModal($('#signupModalWrapper'));
     });
   });
   </script>

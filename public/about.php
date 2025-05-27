@@ -5,50 +5,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SendNoods - About Us</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500;1,700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500;1,700&display=swap" rel="stylesheet">
   <style>
-    body { background: #000; color: #dc2626; }
-    .about-title {
+    .about-title, .about-desc {
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      margin-top: 3.5rem;
-    }
-    .about-desc {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      min-height: 420px;
-      max-height: 420px;
-      overflow: hidden;
-      transition: none;
-      white-space: pre-line;
-      word-break: break-word;
-    }
-    .about-fixed {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 700px;
-      max-width: 98vw;
-      min-height: 800px;
-      max-height: 800px;
-      z-index: 10;
-      overflow: hidden;
-    }
-    @media (max-width: 700px) {
-      .about-fixed {
-        width: 99vw;
-        min-height: 600px;
-        max-height: 600px;
-        padding: 1rem !important;
-      }
-      .about-desc {
-        min-height: 340px;
-        max-height: 340px;
-      }
     }
     .typewriter-cursor {
       display: inline-block;
@@ -64,47 +27,48 @@
   </style>
 </head>
 
-<body>
+<body class="bg-black text-red-600">
   <?php include_once "includes/header.php"; ?>
   <main>
-    <div class="about-fixed w-full max-w-2xl bg-black border-0 rounded-3xl shadow-none p-0 mb-4 flex flex-col items-center justify-center" style="min-height:800px;max-height:800px;">
-      <div class="about-title text-center text-danger fw-bold text-3xl mb-4">About SendNoods</div>
-      <div class="w-100 flex justify-center mb-4">
-        <img src="./assets/images/header.jpg" alt="About SendNoods" style="width:100%;max-width:650px;max-height:320px;height:auto;border-radius:1rem;object-fit:cover;">
+    <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] max-w-[98vw] min-h-[800px] max-h-[800px] z-10 overflow-hidden bg-black border-0 rounded-3xl shadow-none p-0 mb-4 flex flex-col items-center justify-center
+      md:w-[700px] md:max-w-[98vw] md:min-h-[800px] md:max-h-[800px]
+      sm:w-[99vw] sm:min-h-[600px] sm:max-h-[600px] sm:p-4">
+      <div class="about-title text-center text-red-600 font-bold text-3xl mb-4 mt-14">About SendNoods</div>
+      <div class="w-full flex justify-center mb-4">
+        <img src="./assets/images/header.jpg" alt="About SendNoods" class="w-full max-w-2xl max-h-80 rounded-xl object-cover" />
       </div>
-      <div class="about-desc text-white text-lg mb-4 leading-relaxed" id="aboutTypewriter"></div>
+      <div class="about-desc text-white text-lg mb-4 leading-relaxed min-h-[340px] max-h-[420px] overflow-hidden whitespace-pre-line break-words" id="aboutTypewriter"></div>
     </div>
   </main>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    $(function() {
       const aboutText = `Welcome to SendNoods, where we bring the authentic taste of Japan to your table. We specialize in traditional Japanese cuisine made with fresh ingredients and prepared with care. From sushi and sashimi to ramen and donburi, our menu offers a variety of dishes that reflect the rich flavors and culture of Japan.
 
 At SendNoods, we are passionate about bringing the rich traditions of Japanese noodle culture to your table. Our journey began with a simple idea: to serve handcrafted bowls of noodles made with the finest ingredients, bold flavors, and a touch of cheeky fun.
 
 Whether you crave classic broths or modern twists, every dish is prepared with care and respect for the art of Japanese comfort food. We believe in quality, authenticity, and making every meal a memorable experience.`;
 
-      const el = document.getElementById('aboutTypewriter');
+      const $el = $('#aboutTypewriter');
       let i = 0;
       function typeWriterLetter() {
         if (i < aboutText.length) {
           let char = aboutText[i];
           if (char === "\n") {
-            el.innerHTML += "<br>";
+            $el.append("<br>");
           } else {
-            el.innerHTML += char;
+            $el.append(char);
           }
           i++;
           setTimeout(typeWriterLetter, 18);
         } else {
-          el.innerHTML += '<span class="typewriter-cursor">&nbsp;</span>';
+          $el.append('<span class="typewriter-cursor">&nbsp;</span>');
         }
       }
       // Fill with invisible text to prevent box from moving
       const invisible = `<span style="opacity:0;pointer-events:none;">${aboutText.replace(/\n/g, '<br>')}</span>`;
-      el.innerHTML = invisible;
+      $el.html(invisible);
       setTimeout(() => {
-        el.innerHTML = '';
+        $el.html('');
         typeWriterLetter();
       }, 100);
     });
