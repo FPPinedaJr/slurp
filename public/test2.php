@@ -64,6 +64,12 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 class="flex items-center justify-center w-full h-20 text-xl font-bold text-white bg-green-500 rounded-lg">+</button>
         </div>
 
+
+
+
+
+
+
         <!-- Products Display -->
         <div class="flex-1 p-4 overflow-y-auto">
             <h2 id="selected-category-title" class="mb-4 text-2xl font-bold text-gray-700"></h2>
@@ -98,6 +104,11 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
 
     </div>
+
+
+
+
+
 
     <!-- modals -->
     <div id="add-category-modal" class="fixed inset-0 items-center justify-center hidden bg-black/70 ">
@@ -155,7 +166,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="p-4 bg-white rounded-lg w-96">
             <h2 class="mb-4 text-xl font-bold">Edit Product</h2>
             <form id="editProductForm" class="space-y-4" enctype="multipart/form-data">
-                <input type="hidden" name="idproduct">
+                <input type="" name="idproduct">
                 <input type="text" name="name" placeholder="Product Name" class="w-full px-4 py-2 border rounded">
                 <textarea name="description" placeholder="Description"
                     class="w-full px-4 py-2 border rounded"></textarea>
@@ -165,7 +176,8 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="space-x-2 text-right">
                 <button onclick="HideEditProductModal()"
                     class="px-4 py-2 text-white bg-gray-500 rounded">Cancel</button>
-                <button onclick="EditProduct()" type="button" class="px-4 py-2 text-white bg-blue-600 rounded">Update</button>
+                <button onclick="EditProduct()" type="button"
+                    class="px-4 py-2 text-white bg-blue-600 rounded">Update</button>
             </div>
         </div>
     </div>
@@ -293,7 +305,9 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     function ShowEditProductModal(tile) {
         const form = $('#editProductForm')[0];
-        form.id.value = tile.dataset.id;
+
+
+        form.idproduct.value = tile.dataset.id;
         form.name.value = tile.dataset.name;
         form.description.value = tile.dataset.description;
         form.price.value = tile.dataset.price;
@@ -333,8 +347,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         ShowLoading();
         const formData = new FormData($('#editProductForm')[0]);
 
-        console.log(formData);
-        alert(formData);
+
 
         $.ajax({
             url: 'includes/product/edit.php',

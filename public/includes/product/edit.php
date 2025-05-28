@@ -1,7 +1,7 @@
 <?php
 include_once "../connect_db.php";
 
-$id = $_POST['id'] ?? 0;
+$id = $_POST['idproduct'] ?? 0;
 $name = $_POST['name'] ?? '';
 $description = $_POST['description'] ?? '';
 $price = $_POST['price'] ?? 0;
@@ -36,10 +36,10 @@ if (!empty($_FILES['img']['tmp_name'])) {
     imagedestroy($img);
 
 
-    $stmt = $pdo->prepare("UPDATE product SET name=?, description=?, price=?, img=? WHERE id=?");
+    $stmt = $pdo->prepare("UPDATE product SET name=?, description=?, price=?, img=? WHERE idproduct=?");
     $stmt->execute([$name, $description, $price, $compressedImage, $id]);
 } else {
-    $stmt = $pdo->prepare("UPDATE product SET name=?, description=?, price=? WHERE id=?");
+    $stmt = $pdo->prepare("UPDATE product SET name=?, description=?, price=? WHERE idproduct=?");
     $stmt->execute([$name, $description, $price, $id]);
 }
 
