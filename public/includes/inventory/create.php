@@ -1,42 +1,50 @@
 <?php
-include_once '/../connect_db.php';
+include_once "../connect_db.php";
 
-header('Content-Type: application/json');
+function compressImage($sourcePath, $quality = 75)
+{
+    $imgInfo = getimagesize($sourcePath);
+    $mime = $imgInfo['mime'];
 
-try {
-    $name = $_POST['item-name'];
-    $image = $_FILES['item-img-file'];
-
-    if (!empty($profile_pic["tmp_name"])) {
-        $source = $profile_pic["tmp_name"];
-        list($width, $height) = getimagesize($source);
-
-        $max_dimension = 200; // max resolution 
-        $resize_ratio = min($max_dimension / $width, $max_dimension / $height);
-
-        $new_width = $width * $resize_ratio;
-        $new_height = $height * $resize_ratio;
-
-        $info = getimagesize($source);
-        if ($info['mime'] == 'image/jpeg') {
-            $image = imagecreatefromjpeg($source);
-        } elseif ($info['mime'] == 'image/png') {
-            $image = imagecreatefrompng($source);
-        }
-
-        $tn = imagecreatetruecolor($new_width, $new_height);
-        imagecopyresampled($tn, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-
-        ob_start();
-        imagejpeg($tn, NULL, 60);
-        $img_content = ob_get_clean();
+    switch ($mime) {
+        case 'image/jpeg':
+            $image = imagecreatefromjpeg($sourcePath);
+            break;
+        case 'image/png':
+            $image = imagecreatefrompng($sourcePath);
+            break;
+        case 'image/gif':
+            $image = imagecreatefromgif($sourcePath);
+            break;
+        default:
+            return false;
     }
 
+    ob_start();
+    imagejpeg($image, null, $quality);
+    $data = ob_get_clean();
 
-    $stmt = $pdo->prepare("INSERT INTO ingredient (name, image) VALUES (?, ?)");
-    $stmt->execute([$name, $image]);
+    imagedestroy($image);
+    return $data;
+}
 
-    echo json_encode(['success' => true, 'message' => 'Ingredient added successfully']);
-} catch (Exception $e) {
-    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = $_POST['name'] ?? '';
+    $qty = $_POST['qty'] ?? 0;
+    $imageTmp = $_FILES['image']['tmp_name'] ?? null;
+
+    if ($name && is_numeric($qty) && $imageTmp) {
+        $compressed = compressImage($imageTmp, 75); // Compress to 75% quality
+        if (!$compressed) {
+            echo json_encode(['success' => false, 'error' => 'Invalid image type.']);
+            exit;
+        }
+
+        $stmt = $pdo->prepare("INSERT INTO ingredient (name, qty, image, created_at, updated_at) VALUES (?, ?, ?, NOW(), NOW())");
+        $success = $stmt->execute([$name, $qty, $compressed]);
+
+        echo json_encode(['success' => $success]);
+    } else {
+        echo json_encode(['success' => false, 'error' => 'Invalid input.']);
+    }
 }
