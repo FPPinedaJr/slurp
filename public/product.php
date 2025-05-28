@@ -298,8 +298,18 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- Floating Checkout Summary -->
     <div id="floating-checkout"
         class="fixed z-50 hidden w-11/12 max-w-md p-4 transform -translate-x-1/2 bg-white border rounded-lg shadow-md bottom-5 left-1/2">
+
         <div class="flex items-center justify-between">
-            <div class="text-lg font-bold text-red-600">Total: <span id="checkout-total">₱0.00</span></div>
+            <div class="flex">
+                <div class="relative w-auto px-3 py-1 mr-5 text-sm font-semibold text-white bg-red-500 rounded shadow-md">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span id="cart-number"
+                        class="absolute flex items-center justify-center w-5 h-5 text-xs font-bold text-red-600 bg-yellow-400 rounded-full -top-2 -right-2">
+                        0
+                    </span>
+                </div>
+                <div class="text-lg font-bold text-red-600">Total: <span id="checkout-total">₱0.00</span></div>
+            </div>
             <a href="checkout.php" class="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-700">Checkout</a>
         </div>
     </div>
@@ -552,9 +562,6 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         const iduser = $('#user-id').val();
         const idproduct = $('#product-id').val();
 
-        console.log(iduser);
-        console.log(idproduct);
-        alert()
 
         $.ajax({
             url: 'includes/product/add_to_cart.php',
@@ -580,7 +587,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
 
-    const selectedCategoryId = <?= json_encode($selectedCategoryId) ?>;
+    let selectedCategoryId = <?= json_encode($selectedCategoryId) ?>;
 
     $(document).ready(function () {
         $('input[type="file"]').on('change', function () {

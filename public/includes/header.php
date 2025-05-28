@@ -8,16 +8,7 @@
 
         <!-- Right Section -->
         <div class="relative flex items-center space-x-4">
-            <?php if (basename($_SERVER['PHP_SELF']) === 'product.php'): ?>
-                <!-- Card with Number -->
-                <div class="relative px-3 py-1 text-sm font-semibold text-white bg-red-500 rounded-full shadow-md">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <span id="cart-number"
-                        class="absolute flex items-center justify-center w-5 h-5 text-xs font-bold text-red-600 bg-white rounded-full -top-2 -right-2">
-                        0
-                    </span>
-                </div>
-            <?php endif; ?>
+              
 
 
             <!-- Triple Dot Menu -->
