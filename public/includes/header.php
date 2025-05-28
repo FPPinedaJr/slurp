@@ -8,14 +8,17 @@
 
         <!-- Right Section -->
         <div class="relative flex items-center space-x-4">
-            <!-- Card with Number -->
-            <div class="relative px-3 py-1 text-sm font-semibold text-white bg-red-500 rounded-full shadow-md">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <span id="cart-number"
-                    class="absolute flex items-center justify-center w-5 h-5 text-xs font-bold text-red-600 bg-white rounded-full -top-2 -right-2">
-                    0
-                </span>
-            </div>
+            <?php if (basename($_SERVER['PHP_SELF']) === 'product.php'): ?>
+                <!-- Card with Number -->
+                <div class="relative px-3 py-1 text-sm font-semibold text-white bg-red-500 rounded-full shadow-md">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span id="cart-number"
+                        class="absolute flex items-center justify-center w-5 h-5 text-xs font-bold text-red-600 bg-white rounded-full -top-2 -right-2">
+                        0
+                    </span>
+                </div>
+            <?php endif; ?>
+
 
             <!-- Triple Dot Menu -->
             <div class="relative group">
@@ -32,9 +35,10 @@
                     <a href="./profile.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">Profile</a>
                     <a href="./product.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">Products</a>
                     <a href="./inventory.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">inventory</a>
+                    <a href="./user.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">Users</a>
                     <a href="./about.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">About</a>
                     <a href="./contact.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">Contact Us</a>
-                    <a href="./logout.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">Logout</a>
+                    <a href="./includes/logout.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">Logout</a>
                 </div>
 
             </div>

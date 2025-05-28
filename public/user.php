@@ -58,29 +58,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-black text-white font-sans">
+<body class="font-sans text-white bg-black">
 
-<div class="container mx-auto p-6 max-w-6xl">
-    <h1 class="text-4xl font-extrabold mb-6 text-center text-red-600 drop-shadow-lg">User Management</h1>
+<div class="container max-w-6xl p-6 mx-auto">
+    <h1 class="mb-6 text-4xl font-extrabold text-center text-red-600 drop-shadow-lg">User Management</h1>
 
     <div class="flex justify-center mb-6">
     <button id="addUserBtn" 
-        class="bg-yellow-400 hover:bg-yellow-500 text-red-900 font-bold px-6 py-3 rounded-lg shadow-md transition duration-200">
+        class="px-6 py-3 font-bold text-red-900 transition duration-200 bg-yellow-400 rounded-lg shadow-md hover:bg-yellow-500">
             + Add User
         </button>
     </div>
 
-    <div class="overflow-x-auto rounded-lg shadow-lg border border-red-900">
-        <table class="min-w-full bg-black rounded-lg text-white">
-            <thead class="bg-red-700 text-yellow-300 text-sm font-semibold tracking-wide">
+    <div class="overflow-x-auto border border-red-900 rounded-lg shadow-lg">
+        <table class="min-w-full text-white bg-black rounded-lg">
+            <thead class="text-sm font-semibold tracking-wide text-yellow-300 bg-red-700">
             <tr>
-                <th class="py-3 px-6 text-center">id</th>
-                <th class="py-3 px-6 text-center">first name</th>
-                <th class="py-3 px-6 text-center">last name</th>
-                <th class="py-3 px-6 text-center">username</th>
-                <th class="py-3 px-6 text-center">email</th>
-                <th class="py-3 px-6 text-center">user type</th>
-                <th class="py-3 px-6 text-center">actions</th>
+                <th class="px-6 py-3 text-center">id</th>
+                <th class="px-6 py-3 text-center">first name</th>
+                <th class="px-6 py-3 text-center">last name</th>
+                <th class="px-6 py-3 text-center">username</th>
+                <th class="px-6 py-3 text-center">email</th>
+                <th class="px-6 py-3 text-center">user type</th>
+                <th class="px-6 py-3 text-center">actions</th>
             </tr>
             </thead>
 
@@ -88,16 +88,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt = $pdo->query("SELECT * FROM user ORDER BY created_at ASC");
                 while ($row = $stmt->fetch()) {
                     echo "<tr class='border-b border-red-900 hover:bg-red-800'>
-                        <td class='py-3 px-6'>{$row['iduser']}</td>
-                        <td class='py-3 px-6'>{$row['f_name']}</td>
-                        <td class='py-3 px-6'>{$row['l_name']}</td>
-                        <td class='py-3 px-6'>{$row['username']}</td>
-                        <td class='py-3 px-6'>{$row['email']}</td>
-                        <td class='py-3 px-6'>{$row['usertype']}</td>
-                        <td class='py-3 px-6 text-center'>
+                        <td class='px-6 py-3'>{$row['iduser']}</td>
+                        <td class='px-6 py-3'>{$row['f_name']}</td>
+                        <td class='px-6 py-3'>{$row['l_name']}</td>
+                        <td class='px-6 py-3'>{$row['username']}</td>
+                        <td class='px-6 py-3'>{$row['email']}</td>
+                        <td class='px-6 py-3'>{$row['usertype']}</td>
+                        <td class='px-6 py-3 text-center'>
                         <div class='flex justify-center space-x-2'>
-                            <button class='editBtn bg-yellow-400 hover:bg-yellow-500 text-red-900 px-3 py-1 rounded-lg shadow font-semibold transition duration-200' data-id='{$row['iduser']}'>Edit</button>
-                            <button class='deleteBtn bg-red-600 hover:bg-red-700 text-yellow-200 px-3 py-1 rounded-lg shadow font-semibold transition duration-200' data-id='{$row['iduser']}'>Delete</button>
+                            <button class='px-3 py-1 font-semibold text-red-900 transition duration-200 bg-yellow-400 rounded-lg shadow editBtn hover:bg-yellow-500' data-id='{$row['iduser']}'>Edit</button>
+                            <button class='px-3 py-1 font-semibold text-yellow-200 transition duration-200 bg-red-600 rounded-lg shadow deleteBtn hover:bg-red-700' data-id='{$row['iduser']}'>Delete</button>
                         </div>
                     </td>
                     </tr>";
@@ -109,22 +109,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 <!-- Modal -->
-<div id="userModal" class="fixed inset-0 bg-black bg-opacity-70 hidden z-50 flex items-center justify-center">
-  <div class="bg-black text-white p-8 rounded-2xl shadow-2xl w-full max-w-lg border-4 border-red-600">
-    <h2 class="text-3xl font-bold mb-6 text-red-500" id="modalTitle">Add User</h2>
+<div id="userModal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black bg-opacity-70">
+  <div class="w-full max-w-lg p-8 text-white bg-black border-4 border-red-600 shadow-2xl rounded-2xl">
+    <h2 class="mb-6 text-3xl font-bold text-red-500" id="modalTitle">Add User</h2>
     <form id="userForm" class="space-y-4">
       <!-- Form fields -->
       <input type="hidden" name="iduser" id="iduser">
-      <input type="text" name="f_name" id="f_name" placeholder="First Name" class="bg-black text-white border-2 border-red-500 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
-      <input type="text" name="l_name" id="l_name" placeholder="Last Name" class="bg-black text-white border-2 border-red-500 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
-      <input type="text" name="username" id="username" placeholder="Username" class="bg-black text-white border-2 border-red-500 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
-      <input type="email" name="email" id="email" placeholder="Email" class="bg-black text-white border-2 border-red-500 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
-      <input type="number" name="usertype" id="usertype" placeholder="User Type (0/1)" class="bg-black text-white border-2 border-red-500 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-yellow-400" min="0" max="1" required>
-      <textarea name="address" id="address" placeholder="Address" class="bg-black text-white border-2 border-red-500 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-yellow-400" required></textarea>
-      <input type="password" name="password" id="password" placeholder="Password (leave blank to keep current)" class="bg-black text-white border-2 border-red-500 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-yellow-400">
-      <div class="flex justify-end space-x-3 pt-4">
-        <button type="button" id="closeModal" class="bg-gray-400 hover:bg-gray-500 text-black font-bold px-6 py-2 rounded-lg transition duration-200">Cancel</button>
-        <button type="submit" class="bg-yellow-400 hover:bg-yellow-500 text-red-900 font-bold px-6 py-2 rounded-lg shadow-lg transition duration-200">Save</button>
+      <input type="text" name="f_name" id="f_name" placeholder="First Name" class="w-full p-3 text-white bg-black border-2 border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
+      <input type="text" name="l_name" id="l_name" placeholder="Last Name" class="w-full p-3 text-white bg-black border-2 border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
+      <input type="text" name="username" id="username" placeholder="Username" class="w-full p-3 text-white bg-black border-2 border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
+      <input type="email" name="email" id="email" placeholder="Email" class="w-full p-3 text-white bg-black border-2 border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400" required>
+      <input type="number" name="usertype" id="usertype" placeholder="User Type (0/1)" class="w-full p-3 text-white bg-black border-2 border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400" min="0" max="1" required>
+      <textarea name="address" id="address" placeholder="Address" class="w-full p-3 text-white bg-black border-2 border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400" required></textarea>
+      <input type="password" name="password" id="password" placeholder="Password (leave blank to keep current)" class="w-full p-3 text-white bg-black border-2 border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400">
+      <div class="flex justify-end pt-4 space-x-3">
+        <button type="button" id="closeModal" class="px-6 py-2 font-bold text-black transition duration-200 bg-gray-400 rounded-lg hover:bg-gray-500">Cancel</button>
+        <button type="submit" class="px-6 py-2 font-bold text-red-900 transition duration-200 bg-yellow-400 rounded-lg shadow-lg hover:bg-yellow-500">Save</button>
       </div>
     </form>
   </div>

@@ -2,11 +2,15 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SendNoods - About Us</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/output.css?v=0.1">
+    <link rel="stylesheet" href="./assets/css/fontawesome/all.min.css">
+    <link rel="stylesheet" href="./assets/css/fontawesome/fontawesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <script src="./assets/js/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lozad"></script>
+    <title>SendNoods | About</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500;1,700&display=swap" rel="stylesheet">
   <style>
     .about-title, .about-desc {
@@ -27,15 +31,15 @@
   </style>
 </head>
 
-<body class="bg-black text-red-600">
+<body class="text-red-600 bg-black">
   <?php include_once "includes/header.php"; ?>
   <main>
-    <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] max-w-[98vw] min-h-[800px] max-h-[800px] z-10 overflow-hidden bg-black border-0 rounded-3xl shadow-none p-0 mb-4 flex flex-col items-center justify-center
+    <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] max-w-[98vw] min-h-[800px] max-h-[800px] z-10 overflow-hidden  border-0 rounded-3xl shadow-none p-0 mb-4 flex flex-col items-center justify-center
       md:w-[700px] md:max-w-[98vw] md:min-h-[800px] md:max-h-[800px]
       sm:w-[99vw] sm:min-h-[600px] sm:max-h-[600px] sm:p-4">
-      <div class="about-title text-center text-red-600 font-bold text-3xl mb-4 mt-14">About SendNoods</div>
-      <div class="w-full flex justify-center mb-4">
-        <img src="./assets/images/header.jpg" alt="About SendNoods" class="w-full max-w-2xl max-h-80 rounded-xl object-cover" />
+      <div class="mb-4 text-3xl font-bold text-center text-red-600 about-title mt-14">About SendNoods</div>
+      <div class="flex justify-center w-full mb-4">
+        <img src="./assets/images/header.jpg" alt="About SendNoods" class="object-cover w-full max-w-2xl max-h-80 rounded-xl" />
       </div>
       <div class="about-desc text-white text-lg mb-4 leading-relaxed min-h-[340px] max-h-[420px] overflow-hidden whitespace-pre-line break-words" id="aboutTypewriter"></div>
     </div>

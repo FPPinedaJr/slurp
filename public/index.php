@@ -162,15 +162,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
             <span class="text-white/70">With any purchase over ₱300.</span>
           </div>
           <div class="flex flex-col items-center w-full p-6 bg-black border border-red-600 shadow rounded-xl md:w-1/3">
-            <span class="mb-2 text-lg font-bold text-red-600">Loyalty Rewards</span>
-            <span class="text-white/70">Earn points every time you order online.</span>
+            <span class="mb-2 text-lg font-bold text-red-600">Raffle</span>
+            <span class="text-white/70">Chance to win ₱1,000,000 for first time order.</span>
           </div>
         </div>
         <div class="mt-3">
-          <span class="text-lg text-white">Are you interested? <span class="text-red-600">Check it out by signing up
-              or
-              logging in if you already have an account!</span></span>
+          <span class="text-lg text-white">
+            Want to learn more about <span class="italic font-semibold">SendNoods</span> or need help?
+            <a href="./about.php" class="text-red-600 underline hover:text-red-500">Read about us</a> or
+            <a href="./contact.php" class="text-red-600 underline hover:text-red-500">contact our customer service</a>!
+          </span>
         </div>
+
       </section>
       <!-- auth buttons -->
       <div class="flex justify-center gap-4">

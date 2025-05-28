@@ -80,20 +80,32 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div id="products" class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5 p-15">
                 <?php foreach ($products as $product): ?>
                     <div onclick="ShowProductDetailModal(this)"
-                        class="relative flex flex-col items-center p-4 transition-transform duration-200 bg-white rounded-lg shadow cursor-pointer group hover:scale-105"
+                        class="relative flex flex-col overflow-hidden transition-transform duration-200 bg-white shadow-xl cursor-pointer rounded-xl hover:scale-105 group"
                         data-id="<?= $product['idproduct'] ?>"
                         data-name="<?= htmlspecialchars($product['name'], ENT_QUOTES) ?>"
                         data-description="<?= htmlspecialchars($product['description'], ENT_QUOTES) ?>"
                         data-price="<?= $product['price'] ?>" data-category="<?= $product['category'] ?>"
                         data-image="data:image/jpeg;base64,<?= base64_encode($product['img']) ?>">
 
+                        <!-- Top Image -->
                         <img src="data:image/jpeg;base64,<?= base64_encode($product['img']) ?>" alt="Product Image"
-                            class="object-cover w-full h-64 mb-2 rounded" />
+                            class="object-cover w-full h-40" />
 
-                        <h3 class="w-full text-base font-bold text-center text-gray-800 truncate">
-                            <?= htmlspecialchars($product['name']) ?>
-                        </h3>
-                        <p class="text-sm text-gray-600">₱<?= number_format($product['price']) ?></p>
+                        <!-- Price Badge -->
+                        <div
+                            class="absolute left-0 px-6 py-3 text-sm font-bold text-white bg-red-600 rounded-r-lg shadow-lg top-5">
+                            ₱<?= number_format($product['price']) ?>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="flex flex-col justify-between flex-1 p-4">
+                            <h3 class="mb-2 text-lg font-semibold leading-snug text-gray-800">
+                                <?= htmlspecialchars($product['name']) ?>
+                            </h3>
+                            <!-- <p class="text-sm text-gray-600 line-clamp-2">
+                                <?= htmlspecialchars($product['description']) ?>
+                            </p> -->
+                        </div>
 
                         <!-- Admin Buttons -->
                         <div class="absolute flex gap-1 transition-opacity opacity-0 top-2 right-2 group-hover:opacity-100">
@@ -111,7 +123,6 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </button>
                         </div>
                     </div>
-
                 <?php endforeach; ?>
 
                 <button onclick="ShowAddProductModal()"
@@ -318,6 +329,9 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 </body>
 <script>
+    let quantity = 1;
+
+
     function ShowAddCategoryModal() {
         $('#add-category-modal').removeClass('hidden').addClass('flex');
     }
@@ -518,7 +532,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         });
     }
 
-    let quantity = 1;
+
 
     // Quantity Buttons
     $('#qty-plus').on('click', () => {
