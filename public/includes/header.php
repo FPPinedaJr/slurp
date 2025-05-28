@@ -8,7 +8,7 @@
 
         <!-- Right Section -->
         <div class="relative flex items-center space-x-4">
-              
+
 
 
             <!-- Triple Dot Menu -->
@@ -22,14 +22,13 @@
                 <!-- Dropdown -->
                 <div id="menuDropdown"
                     class="absolute right-0 z-10 hidden w-40 mt-2 text-black bg-white rounded-md shadow-lg">
-                    <a href="./dashboard.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">Home</a>
-                    <a href="./profile.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">Profile</a>
                     <a href="./product.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">Products</a>
                     <a href="./inventory.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">inventory</a>
+                    <a href="./orders.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">Orders</a>
                     <a href="./user.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">Users</a>
-                    <a href="./about.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">About</a>
-                    <a href="./contact.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">Contact Us</a>
-                    <a href="./includes/logout.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">Logout</a>
+                    <a href="./profile.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">Profile</a>
+                    <a href="./includes/logout.php"
+                        class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">Logout</a>
                 </div>
 
             </div>
