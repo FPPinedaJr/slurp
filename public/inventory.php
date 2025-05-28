@@ -20,63 +20,67 @@ $ingredients = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>SendNoods | Inventory Management</title>
 </head>
 
-<body class="flex justify-center bg-black md:p-4">
-    <main class="w-11/12 my-10 h-vh md:w-4/5">
+<body class="bg-black md:p-4">
+    <?php include_once "includes/header.php"; ?>
 
-        <div class="flex items-center justify-between my-10">
-            <h1 class="text-xl font-bold text-yellow-500 md:text-4xl">Inventory Management</h1>
-            <button onclick="showAddModal()"
-                class="px-4 py-2 font-semibold text-black rounded cursor-pointer bg-amber-500 hover:bg-amber-600">
-                New
-            </button>
-        </div>
+    <div class="flex justify-center w-full">
+        <main class="w-11/12 my-10 h-vh md:w-4/5">
+
+            <div class="flex items-center justify-between my-10">
+                <h1 class="text-xl font-bold text-yellow-500 md:text-4xl">Inventory Management</h1>
+                <button onclick="showAddModal()"
+                    class="px-4 py-2 font-semibold text-black rounded cursor-pointer bg-amber-500 hover:bg-amber-600">
+                    New
+                </button>
+            </div>
 
 
-        <div id="ingredient-grid" class="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-            <?php foreach ($ingredients as $ingredient):
-                $img = $ingredient['image'] ? 'data:image/jpeg;base64,' . base64_encode($ingredient['image']) : 'https://via.placeholder.com/150';
-                $id = $ingredient['idingredient'];
-                $name = htmlspecialchars($ingredient['name']);
-                $qty = (int) $ingredient['qty'];
-                ?>
-                <div id="tile-<?= $id ?>"
-                    class="relative p-3 text-gray-200 transition-all bg-black border shadow-lg border-rose-500 shadow-rose-500 rounded-2xl ">
+            <div id="ingredient-grid" class="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                <?php foreach ($ingredients as $ingredient):
+                    $img = $ingredient['image'] ? 'data:image/jpeg;base64,' . base64_encode($ingredient['image']) : 'https://via.placeholder.com/150';
+                    $id = $ingredient['idingredient'];
+                    $name = htmlspecialchars($ingredient['name']);
+                    $qty = (int) $ingredient['qty'];
+                    ?>
+                    <div id="tile-<?= $id ?>"
+                        class="relative p-3 text-gray-200 transition-all bg-black border border-red-500 shadow-lg rounded-2xl ">
 
-                    <div class="absolute z-10 flex items-center justify-end gap-2 px-2 top-2 left-2 right-2">
-                        <button onclick="confirmDelete(<?= $ingredient['idingredient'] ?>)"
-                            class="p-2 text-red-400 rounded-md shadow-md cursor-pointer bg-gray-800/70 hover:text-red-600 hover:bg-gray-700">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                        <button onclick="showEditModal(<?= $id ?>, '<?= $name ?>', <?= $qty ?>)"
-                            class="p-2 text-yellow-400 rounded-md shadow-md cursor-pointer bg-gray-800/70 hover:text-yellow-500 hover:bg-gray-700">
-                            <i class="fas fa-edit"></i>
-                        </button>
+                        <div class="absolute z-10 flex items-center justify-end gap-2 px-2 top-2 left-2 right-2">
+                            <button onclick="confirmDelete(<?= $ingredient['idingredient'] ?>)"
+                                class="p-2 text-red-400 rounded-md shadow-md cursor-pointer bg-gray-800/70 hover:text-red-600 hover:bg-gray-700">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button onclick="showEditModal(<?= $id ?>, '<?= $name ?>', <?= $qty ?>)"
+                                class="p-2 text-yellow-400 rounded-md shadow-md cursor-pointer bg-gray-800/70 hover:text-yellow-500 hover:bg-gray-700">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+
+                        <img src="<?= $img ?>" alt="<?= $name ?>"
+                            class="object-cover w-full h-40 mb-3 border border-red-500 shadow-inner rounded-xl">
+
+                        <div class="text-lg font-bold text-center text-white truncate"><?= $name ?></div>
+
+                        <div class="flex items-center justify-between pt-3 mt-4 border-t border-red-500">
+                            <button class="text-2xl text-red-400 cursor-pointer hover:text-red-300 btn-qty"
+                                data-id="<?= $id ?>" data-action="minus">
+                                <i class="fas fa-minus-circle"></i>
+                            </button>
+
+                            <span id="qty-<?= $id ?>" class="text-xl font-semibold text-white"><?= $qty ?></span>
+
+                            <button class="text-2xl text-red-400 cursor-pointer hover:text-red-300 btn-qty"
+                                data-id="<?= $id ?>" data-action="plus">
+                                <i class="fas fa-plus-circle"></i>
+                            </button>
+                        </div>
                     </div>
 
-                    <img src="<?= $img ?>" alt="<?= $name ?>"
-                        class="object-cover w-full h-40 mb-3 border shadow-inner border-rose-500 rounded-xl">
+                <?php endforeach; ?>
+            </div>
 
-                    <div class="text-lg font-bold text-center text-white truncate"><?= $name ?></div>
-
-                    <div class="flex items-center justify-between pt-3 mt-4 border-t border-rose-500">
-                        <button class="text-2xl text-red-400 cursor-pointer hover:text-red-300 btn-qty" data-id="<?= $id ?>"
-                            data-action="minus">
-                            <i class="fas fa-minus-circle"></i>
-                        </button>
-
-                        <span id="qty-<?= $id ?>" class="text-xl font-semibold text-white"><?= $qty ?></span>
-
-                        <button class="text-2xl text-red-400 cursor-pointer hover:text-red-300 btn-qty" data-id="<?= $id ?>"
-                            data-action="plus">
-                            <i class="fas fa-plus-circle"></i>
-                        </button>
-                    </div>
-                </div>
-
-            <?php endforeach; ?>
-        </div>
-
-    </main>
+        </main>
+    </div>
 
 
     <div id="add-ingredient-modal"

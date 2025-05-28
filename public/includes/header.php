@@ -1,4 +1,4 @@
-<header class="text-white bg-black shadow-md">
+<header class="text-white bg-black border-b-2 border-red-500 shadow-md">
     <div class="flex items-center justify-between w-full px-6 py-3">
         <!-- Logo and Tagline -->
         <div class="flex items-center space-x-4">
@@ -11,15 +11,16 @@
             <!-- Card with Number -->
             <div class="relative px-3 py-1 text-sm font-semibold text-white bg-red-500 rounded-full shadow-md">
                 <i class="fa-solid fa-cart-shopping"></i>
-                <span
+                <span id="cart-number"
                     class="absolute flex items-center justify-center w-5 h-5 text-xs font-bold text-red-600 bg-white rounded-full -top-2 -right-2">
-                    3
+                    0
                 </span>
             </div>
 
             <!-- Triple Dot Menu -->
             <div class="relative group">
-                <button id="menuToggleBtn" class="text-2xl text-white cursor-pointer hover:text-red-500 focus:outline-none">
+                <button id="menuToggleBtn"
+                    class="text-2xl text-white cursor-pointer hover:text-red-500 focus:outline-none">
                     <i class="fa-solid fa-ellipsis-vertical"></i>
                 </button>
 

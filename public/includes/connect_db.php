@@ -42,12 +42,12 @@ $password = "";
 $defaultSchema = "slurp";
 $charset = "utf8mb4";
 
-// $hostname = "77.37.35.51";
-// $port = "3306";
-// $username = "u273960544_kisser";
-// $password = "h1g0pM4l4l4*";
-// $defaultSchema = "u273960544_slurp";
-// $charset = "utf8mb4";
+$hostname = "77.37.35.51";
+$port = "3306";
+$username = "u273960544_kisser";
+$password = "h1g0pM4l4l4*";
+$defaultSchema = "u273960544_slurp";
+$charset = "utf8mb4";
 
 $dsn = "mysql:host=$hostname;dbname=$defaultSchema;charset=$charset;port=$port";
 

@@ -21,8 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup'])) {
   } else {
     $stmt = $pdo->prepare("INSERT INTO user (f_name, l_name, username, email, usertype, address, password) VALUES (?, ?, ?, ?, ?, ?, ?)");
     $stmt->execute([$f_name, $l_name, $username, $email, $usertype, $address, $password]);
+    $id = $pdo->lastInsertId();
     // Auto-login after signup
     $_SESSION['user'] = [
+      'userid' => $id,
       'username' => $username,
       'email' => $email,
       'usertype' => $usertype,
@@ -46,14 +48,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
   $user = $stmt->fetch();
   if ($user && password_verify($password, $user['password'])) {
     $_SESSION['user'] = [
+      'userid' => $user['iduser'],
       'username' => $user['username'],
       'email' => $user['email'],
       'usertype' => $user['usertype'],
       'f_name' => $user['f_name'],
       'l_name' => $user['l_name'],
-      'address' => $user['address'] // ensure address is included
+      'address' => $user['address']
     ];
-    header("Location: profile.php");
+    header("Location: product.php");
     exit;
   } else {
     $login_error = "Invalid email or password.";
@@ -92,7 +95,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 </head>
 
 <body class="text-red-600 bg-black">
-  <?php include_once "includes/header.php"; ?>
+
+  <?php if (!empty($login_error)): ?>
+    <div role="alert"
+      class="fixed px-4 py-3 mb-4 text-sm text-white transform -translate-x-1/2 bg-red-600 rounded shadow bottom-5 left-1/2">
+      <?php echo htmlspecialchars($login_error); ?>
+    </div>
+  <?php endif; ?>
+
+  <?php if (!empty($login_success)): ?>
+    <div role="alert"
+      class="fixed px-4 py-3 mb-4 text-sm text-white transform -translate-x-1/2 bg-green-600 rounded shadow bottom-5 left-1/2">
+      <?php echo htmlspecialchars($login_success); ?>
+    </div>
+  <?php endif; ?>
+
+
+
 
   <div id="main-blur-blur">
     <main class="container py-10 mx-auto text-center">
@@ -148,15 +167,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
           </div>
         </div>
         <div class="mt-3">
-          <span class="text-lg text-white">Are you interested? <span class="text-red-600">Check it out by signing up or
+          <span class="text-lg text-white">Are you interested? <span class="text-red-600">Check it out by signing up
+              or
               logging in if you already have an account!</span></span>
         </div>
       </section>
       <!-- auth buttons -->
       <div class="flex justify-center gap-4">
-        <button class="px-6 py-2 text-white bg-red-600 rounded hover:bg-red-700" id="showLoginModal">Login</button>
-        <button class="px-6 py-2 text-red-600 border border-red-600 rounded hover:bg-red-700 hover:text-white"
-          id="showSignupModal">Sign Up</button>
+        <button
+          class="px-6 py-2 text-red-600 border border-red-600 rounded cursor-pointer hover:bg-red-700 hover:text-white"
+          id="showLoginModal">Login</button>
       </div>
     </main>
   </div>
@@ -172,18 +192,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
       <div class="w-full md:w-3/5">
         <div class="flex items-center justify-between px-6 py-4 border-b border-red-600">
           <h5 class="text-xl text-red-600">Login</h5>
-          <button type="button" class="text-2xl text-white" id="closeLoginModal">&times;</button>
+          <button type="button" class="text-2xl text-white cursor-pointer" id="closeLoginModal">&times;</button>
         </div>
         <form method="post" autocomplete="off">
           <div class="px-6 py-4">
-            <?php if (!empty($login_error)): ?>
-              <div class="px-3 py-2 mb-2 text-white bg-red-600 rounded"><?php echo htmlspecialchars($login_error); ?>
-              </div>
-            <?php endif; ?>
-            <?php if (!empty($login_success)): ?>
-              <div class="px-3 py-2 mb-2 text-white bg-green-600 rounded"><?php echo htmlspecialchars($login_success); ?>
-              </div>
-            <?php endif; ?>
+
             <div class="mb-4">
               <label for="loginEmail" class="block mb-1">Email address</label>
               <input type="email" class="w-full px-3 py-2 text-red-600 bg-black border border-red-600 rounded"
@@ -203,7 +216,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
           </div>
           <div class="px-6 py-4 border-t border-red-600">
             <button type="submit" name="login"
-              class="w-full py-2 text-white bg-red-600 rounded hover:bg-red-700">Login</button>
+              class="w-full py-2 text-white bg-red-600 rounded cursor-pointer hover:bg-red-700">Login</button>
           </div>
         </form>
       </div>
@@ -230,7 +243,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
               </div>
             <?php endif; ?>
             <?php if (!empty($signup_success)): ?>
-              <div class="px-3 py-2 mb-2 text-white bg-green-600 rounded"><?php echo htmlspecialchars($signup_success); ?>
+              <div class="px-3 py-2 mb-2 text-white bg-green-600 rounded">
+                <?php echo htmlspecialchars($signup_success); ?>
               </div>
             <?php endif; ?>
             <div class="mb-3">
@@ -253,12 +267,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
               <input type="email" class="w-full px-3 py-2 text-red-600 bg-black border border-red-600 rounded"
                 id="signupEmail" name="signupEmail" maxlength="255" required autocomplete="email" />
             </div>
-            <div class="mb-3">
+            <div class="hidden mb-3">
               <label for="signupUsertype" class="block mb-1">User Type</label>
               <select class="w-full px-3 py-2 text-red-600 bg-black border border-red-600 rounded" id="signupUsertype"
                 name="signupUsertype" required>
                 <option value="" disabled selected>Select user type</option>
-                <option value="0">Customer</option>
+                <option value="0" selected>Customer</option>
                 <option value="1">Admin</option>
               </select>
             </div>
