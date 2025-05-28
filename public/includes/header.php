@@ -19,20 +19,43 @@
 
             <!-- Triple Dot Menu -->
             <div class="relative group">
-                <button class="text-white hover:text-red-500 focus:outline-none">
+                <button id="menuToggleBtn" class="text-2xl text-white cursor-pointer hover:text-red-500 focus:outline-none">
                     <i class="fa-solid fa-ellipsis-vertical"></i>
                 </button>
 
+
                 <!-- Dropdown -->
-                <div
-                    class="absolute right-0 z-10 hidden w-40 mt-2 text-black bg-white rounded-md shadow-lg group-hover:block">
+                <div id="menuDropdown"
+                    class="absolute right-0 z-10 hidden w-40 mt-2 text-black bg-white rounded-md shadow-lg">
                     <a href="./dashboard.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">Home</a>
                     <a href="./profile.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">Profile</a>
+                    <a href="./product.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">Products</a>
+                    <a href="./inventory.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">inventory</a>
                     <a href="./about.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">About</a>
                     <a href="./contact.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">Contact Us</a>
                     <a href="./logout.php" class="block px-4 py-2 hover:bg-red-100 hover:text-red-600">Logout</a>
                 </div>
+
             </div>
         </div>
     </div>
 </header>
+
+<script>
+    $(document).ready(function () {
+        $('#menuToggleBtn').on('click', function (e) {
+            e.stopPropagation(); // Prevents body click from closing immediately
+            $('#menuDropdown').toggle(); // Toggle the dropdown
+        });
+
+        // Hide the menu if clicking outside
+        $(document).on('click', function () {
+            $('#menuDropdown').hide();
+        });
+
+        // Prevent closing if clicking inside the menu
+        $('#menuDropdown').on('click', function (e) {
+            e.stopPropagation();
+        });
+    });
+</script>
