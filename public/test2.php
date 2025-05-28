@@ -69,12 +69,25 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <h2 id="selected-category-title" class="mb-4 text-2xl font-bold text-gray-700"></h2>
             <div id="products" class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
                 <?php foreach ($products as $product): ?>
-                    <div class="p-4 bg-white rounded-lg shadow" data-category="<?= $product['category'] ?>">
-                        <img src="data:image/jpeg;base64,<?= base64_encode($product['img']) ?> alt=" Product Image"
+                    <div class="relative p-4 bg-white rounded-lg shadow" data-id="<?= $product['idproduct'] ?>"
+                        data-name="<?= htmlspecialchars($product['name'], ENT_QUOTES) ?>"
+                        data-description="<?= htmlspecialchars($product['description'], ENT_QUOTES) ?>"
+                        data-price="<?= $product['price'] ?>" data-category="<?= $product['category'] ?>">
+
+                        <img src="data:image/jpeg;base64,<?= base64_encode($product['img']) ?>" alt="Product Image"
                             class="object-cover w-32 h-32 rounded" />
+
                         <h3 class="text-lg font-semibold"><?= htmlspecialchars($product['name']) ?></h3>
-                        <p class="text-sm text-gray-600">
-                            ₱<?= number_format($product['on_sale'] ? $product['sale_price'] : $product['price']) ?></p>
+                        <p class="text-sm text-gray-600">₱<?= number_format($product['price']) ?></p>
+
+                        <div class="absolute space-x-2 top-2 right-2">
+                            <button onclick="ShowEditProductModal(this.parentElement.parentElement)" class="text-blue-600">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="DeleteProduct(<?= $product['idproduct'] ?>)" class="text-red-600">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
                     </div>
                 <?php endforeach; ?>
                 <button onclick="ShowAddProductModal()" class="px-4 py-2 mt-4 text-white bg-green-600 rounded">
@@ -128,10 +141,6 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <textarea name="description" placeholder="Description"
                     class="w-full px-4 py-2 border rounded"></textarea>
                 <input type="number" name="price" placeholder="Price" class="w-full px-4 py-2 border rounded">
-                <label class="flex items-center space-x-2">
-                    <input type="checkbox" name="on_sale"> <span>On Sale</span>
-                </label>
-                <input type="number" name="sale_price" placeholder="Sale Price" class="w-full px-4 py-2 border rounded">
                 <input type="file" name="img" accept="image/*" required>
             </form>
             <div class="space-x-2 text-right">
@@ -142,6 +151,24 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
 
+    <div id="edit-product-modal" class="fixed inset-0 items-center justify-center hidden bg-black/70">
+        <div class="p-4 bg-white rounded-lg w-96">
+            <h2 class="mb-4 text-xl font-bold">Edit Product</h2>
+            <form id="editProductForm" class="space-y-4" enctype="multipart/form-data">
+                <input type="hidden" name="idproduct">
+                <input type="text" name="name" placeholder="Product Name" class="w-full px-4 py-2 border rounded">
+                <textarea name="description" placeholder="Description"
+                    class="w-full px-4 py-2 border rounded"></textarea>
+                <input type="number" name="price" placeholder="Price" class="w-full px-4 py-2 border rounded">
+                <input type="file" name="img" accept="image/*">
+            </form>
+            <div class="space-x-2 text-right">
+                <button onclick="HideEditProductModal()"
+                    class="px-4 py-2 text-white bg-gray-500 rounded">Cancel</button>
+                <button onclick="EditProduct()" type="button" class="px-4 py-2 text-white bg-blue-600 rounded">Update</button>
+            </div>
+        </div>
+    </div>
 
 
     <!-- Loading Overlay -->
@@ -264,6 +291,20 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $('#add-product-modal').addClass('hidden').removeClass('flex');
     }
 
+    function ShowEditProductModal(tile) {
+        const form = $('#editProductForm')[0];
+        form.id.value = tile.dataset.id;
+        form.name.value = tile.dataset.name;
+        form.description.value = tile.dataset.description;
+        form.price.value = tile.dataset.price;
+        $('#edit-product-modal').removeClass('hidden').addClass('flex');
+    }
+
+    function HideEditProductModal() {
+        $('#edit-product-modal').addClass('hidden').removeClass('flex');
+    }
+
+
 
     function AddProduct() {
         ShowLoading();
@@ -285,6 +326,42 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 HideLoading();
                 ShowMessageModal('Error', 'Failed to add product.');
             }
+        });
+    }
+
+    function EditProduct() {
+        ShowLoading();
+        const formData = new FormData($('#editProductForm')[0]);
+
+        console.log(formData);
+        alert(formData);
+
+        $.ajax({
+            url: 'includes/product/edit.php',
+            method: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: () => {
+                location.reload();
+            },
+            error: () => {
+                HideLoading();
+                ShowMessageModal('Error', 'Failed to update product.');
+            }
+        });
+    }
+
+
+
+
+    function DeleteProduct(id) {
+        if (!confirm("Are you sure you want to delete this product?")) return;
+
+        $.post("includes/product/delete.php", { id }, () => {
+            location.reload();
+        }).fail(() => {
+            ShowMessageModal('Error', 'Failed to delete product.');
         });
     }
 
